@@ -1,13 +1,13 @@
-import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class FizzBuzz {
 
 	public static void main(String[] args) {
+		
 		System.out.println("Welcome to FizzBuzz");
-		int start = getStartValue(0);
-		int end = 10;
+		int start = getNumber(0, "Please enter the START number", 0);
+		int end = getNumber(0, "Please enter the END number", 100);
 		fizzBuzz(start, end+1);
 		
 	}
@@ -28,20 +28,21 @@ public class FizzBuzz {
 		}
 	}
 	
-	private static int getStartValue(int count) {
+	private static int getNumber(int count, String message, int defualt) {
 		Scanner scanner = new Scanner(System.in);
-		int result = 0;
+		int result = defualt;
 		if (count > 2) {
-			System.out.println("You have had three attempts to enter a numbers, the defualt number shall now be used.");
-			return result;
+			System.out.println("You have had three attempts to enter a number, the defualt number shall now be used.");
+		} else {
+			System.out.println(String.join(", ", message, String.join(" ", "if nothing is entered", Integer.toString(defualt), "shall be used by defualt.")));
+			try {
+				result = scanner.nextInt();
+			} catch (InputMismatchException e) {
+				System.out.println("Please ensure a integer is entered");
+				result = getNumber(count + 1, message, defualt);
+			}
 		}
-		System.out.println("Please enter a start number, if nothing is entered 0 shall be used by defualt.");
-		try {
-			result = scanner.nextInt();
-		} catch (InputMismatchException e) {
-			System.out.println("Please ensure a integer is entered");
-			result = getStartValue(count + 1);
-		}
+		scanner.close();
 		return result;
 	}
 }
