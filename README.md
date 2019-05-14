@@ -1,1 +1,1 @@
-This folder contains various summer projects
+Summer Projects
